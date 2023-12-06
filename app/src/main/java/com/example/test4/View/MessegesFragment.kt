@@ -6,7 +6,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.test4.Model.Person
+import com.example.test4.Model.Repository
 import com.example.test4.ViewModel.FragmentViewModel
+import com.example.test4.ViewModel.YourViewModelFactory
 import com.example.test4.databinding.FragmentMessegesBinding
 import kotlinx.coroutines.launch
 
@@ -14,7 +16,9 @@ class MessegesFragment :  BaseFragment<FragmentMessegesBinding>(FragmentMesseges
     ItemListener {
 
     private lateinit var myAdaper: MyRecyclerAdapter
-    private val viewModel: FragmentViewModel by viewModels()
+    private val viewModel: FragmentViewModel by viewModels {
+        YourViewModelFactory(Repository())
+    }
 
 
     companion object {
@@ -36,9 +40,7 @@ class MessegesFragment :  BaseFragment<FragmentMessegesBinding>(FragmentMesseges
                 myAdaper.submitList(itemList)
             }
         }
-        viewModel.addItem(Person(1,"https://www.alia.ge/wp-content/uploads/2022/09/grisha.jpg","Giorgi","rogor xaar kacii","12:15AM",0,false, "file"))
-        viewModel.addItem(Person(2,null,"Goga","sa","12:15AM",3,false, "voice"))
-        viewModel.addItem(Person(3,null,"Makho","rogor xaar kacii","12:15AM",0,true, "text"))
+        viewModel.getPersons()
     }
 
     private fun bindings(){

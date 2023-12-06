@@ -1,12 +1,18 @@
 package com.example.test4.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.test4.Model.Person
+import com.example.test4.Model.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-class FragmentViewModel :ViewModel(){
+class FragmentViewModel(private val repository: Repository) :ViewModel(){
+
     private val _items = MutableStateFlow<List<Person>>(emptyList())
     val items: StateFlow<List<Person>> = _items.asStateFlow()
 
@@ -43,5 +49,31 @@ class FragmentViewModel :ViewModel(){
         if (index != -1) {
             originalItems[index] = updatedItem
         }
+    }
+
+    fun getPersons() {
+        viewModelScope.launch {
+            try {
+                val persons = repository.getPersons()
+                Log.d("tag1234","geting something with size ${persons.size}")
+                persons.forEach{ it ->
+                    addItem(it)
+                }
+            } catch (e: Exception) {
+                // Handle errors
+                Log.d("tag1234", "Error: ${e.message}")
+            }
+        }
+    }
+}
+
+
+class YourViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(FragmentViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return FragmentViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
