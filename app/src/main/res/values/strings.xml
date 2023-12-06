@@ -6,4 +6,6 @@
     <string name="name">Name</string>
     <string name="empty_for_now">empty for now</string>
     <string name="_00_00">00:00</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
 </resources>

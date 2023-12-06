@@ -1,69 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:orientation="horizontal"
-    android:layout_marginVertical="5dp">
+    android:layout_height="74dp"
+    android:layout_marginBottom="5dp"
+    android:orientation="horizontal">
 
-    <FrameLayout
-        android:id="@+id/userImageFrame"
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/userImage"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@color/user_background">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/baseline_person_24" />
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textColor="@color/white"
-            android:textSize="19sp"/>
-
-        <TextView
-            android:id="@+id/tvLastMessege"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty_for_now"
-            android:textColor="@color/white"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
+        android:background="@color/user_background"
+        android:src="@drawable/baseline_person_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/CircularImageView"
+        android:scaleType="centerCrop"/>
 
 
-    <LinearLayout
-        android:layout_width="125dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:orientation="vertical">
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textColor="@color/white"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvLastMessage"
+        app:layout_constraintStart_toEndOf="@id/userImage"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="15dp"/>
 
-        <TextView
-            android:id="@+id/tvLastTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/_00_00"
-            android:textColor="@color/white"
-            android:textSize="19sp"
-            android:layout_gravity="end"/>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/msgType"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@color/grey1"
+        android:src="@drawable/ic_voice_17"
+        app:layout_constraintStart_toStartOf="@id/tvName"
+        app:layout_constraintTop_toTopOf="@id/tvLastMessage"
+        app:layout_constraintBottom_toBottomOf="@id/tvLastMessage"
+        app:layout_constraintEnd_toStartOf="@id/tvLastMessage"
+        android:visibility="gone"
+        app:shapeAppearanceOverlay="@style/CircularImageView" />
+
+    <TextView
+        android:id="@+id/tvLastMessage"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/empty_for_now"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/msgType"
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        android:layout_marginLeft="4dp"/>
 
 
+    <TextView
+        android:id="@+id/tvLastTimeAmPm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_00_00"
+        android:textColor="@color/white"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvName"
+        app:layout_constraintBottom_toBottomOf="@id/tvName"
+        android:layout_marginRight="24dp"/>
 
-    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/missedMessages"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_new_msg_shape"
+        android:text="0"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/white"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvLastMessage"
+        app:layout_constraintEnd_toEndOf="@id/tvLastTimeAmPm"
+        app:layout_constraintTop_toBottomOf="@id/tvLastTimeAmPm"
+        android:visibility="gone"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/isTyping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/ic_typing_11"
+        app:layout_constraintBottom_toBottomOf="@id/missedMessages"
+        app:layout_constraintEnd_toStartOf="@id/missedMessages"
+        app:layout_constraintTop_toTopOf="@id/missedMessages"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="600dp"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        app:layout_constraintStart_toStartOf="@id/tvName"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

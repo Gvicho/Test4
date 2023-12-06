@@ -8,6 +8,7 @@ plugins {
 buildscript {
     repositories {
         google()
+        mavenCentral() // for glide
     }
     dependencies {
         val nav_version = "2.7.5"
