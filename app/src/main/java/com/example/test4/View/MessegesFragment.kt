@@ -3,7 +3,9 @@ package com.example.test4.View
 import android.os.Bundle
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.test4.Model.Person
 import com.example.test4.Model.Repository
@@ -36,9 +38,13 @@ class MessegesFragment :  BaseFragment<FragmentMessegesBinding>(FragmentMesseges
         myAdaper = MyRecyclerAdapter(this)
         bindings()
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.items.collect { itemList ->
-                myAdaper.submitList(itemList)
+
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.items.collect { itemList ->
+                    myAdaper.submitList(itemList)
+                }
             }
+
         }
     }
 
