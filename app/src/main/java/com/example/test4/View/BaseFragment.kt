@@ -20,7 +20,7 @@ abstract class BaseFragment<VB: ViewBinding>(private val inflate : Inflater<VB>)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initData()
+        initData(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -43,5 +43,5 @@ abstract class BaseFragment<VB: ViewBinding>(private val inflate : Inflater<VB>)
     }
 
     abstract fun setUp()
-    abstract fun initData()
+    abstract fun initData(savedInstanceState: Bundle?)
 }

@@ -40,7 +40,6 @@ class MessegesFragment :  BaseFragment<FragmentMessegesBinding>(FragmentMesseges
                 myAdaper.submitList(itemList)
             }
         }
-        viewModel.getPersons()
     }
 
     private fun bindings(){
@@ -60,8 +59,12 @@ class MessegesFragment :  BaseFragment<FragmentMessegesBinding>(FragmentMesseges
         }
     }
 
-    override fun initData() {
-
+    override fun initData(savedInstanceState: Bundle?) {
+        if(savedInstanceState == null ){
+            // so that we don't get new data on each configuration changes.
+            // Fragments bundle is null only when it is first created
+            viewModel.getPersons()
+        }
     }
 
     override fun removeItem(field: Person) {
